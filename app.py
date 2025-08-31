@@ -1,3 +1,4 @@
+from webdriver_manager.chrome import ChromeDriverManager
 import os
 from flask import Flask, jsonify
 from selenium import webdriver
@@ -17,8 +18,8 @@ def make_driver():
     options.add_argument("--window-size=1280,1696")
     options.binary_location = "/usr/bin/google-chrome"
 
-    # ensure correct path
-    service = Service(executable_path="/usr/local/bin/chromedriver")
+    # Use webdriver-manager to get the correct chromedriver path
+    service = Service(ChromeDriverManager().install())
     return webdriver.Chrome(service=service, options=options)
 
 @app.get("/scrape")
