@@ -10,17 +10,16 @@ app = Flask(__name__)
 
 def make_driver():
     options = Options()
-    # Headless + render-friendly flags
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1280,1696")
-    # Use system Chrome
     options.binary_location = "/usr/bin/google-chrome"
-    service = Service("/usr/local/bin/chromedriver")
-    return webdriver.Chrome(service=service, options=options)
 
+    # ensure correct path
+    service = Service(executable_path="/usr/local/bin/chromedriver")
+    return webdriver.Chrome(service=service, options=options)
 
 @app.get("/scrape")
 def scrape():
